@@ -1,7 +1,7 @@
 import java.math.BigInteger;
 import java.util.ArrayList;
 
-public class IterativeFibonacci {
+class IterativeFibonacci {
   int[] nums;
   ArrayList<Integer> arrayNums;
   boolean memoized;
@@ -11,9 +11,11 @@ public class IterativeFibonacci {
     memoized = memoize;
 
     if (memoized == false) {
+      ArrayList<BigInteger> ret = new ArrayList<BigInteger>();
       for (int i = 0; i < nums.length; i++) {
-        System.out.println("Here's your Fibonacci number for position " + nums[i] + ": " + calc(nums[i]));
+        ret.add(calc(nums[i]));
       }
+      System.out.println("Here are your Fibonacci numbers: " + ret);
     } else {
       arrayNums = new ArrayList<Integer>();
       for (int num : n) {
@@ -27,7 +29,7 @@ public class IterativeFibonacci {
     BigInteger ret = BigInteger.valueOf(0);
 
     if (num < 2) {
-      return BigInteger.valueOf(num);
+      return BigInteger.valueOf (num);
     } else {
       BigInteger index0 = BigInteger.valueOf(0);
       BigInteger index1 = BigInteger.valueOf(1);

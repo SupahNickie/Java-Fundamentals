@@ -23,18 +23,16 @@ public class Fibonacci {
     Pattern approachPtn = Pattern.compile("(?i)recursive");
     Matcher approachM = approachPtn.matcher(approachInput);
 
+    System.out.print("Would you like to use a memoized approach or not? (enter Yes or No) ");
+    String memoInput = userInput.next();
+
+    Pattern memoPtn = Pattern.compile("(?i)yes");
+    Matcher memoM = memoPtn.matcher(memoInput);
+    boolean memoized = memoM.matches();
+
     if (approachM.matches()) {
-      RecursiveFibonacci fib = new RecursiveFibonacci(arrayOfInts);
+      RecursiveFibonacci fib = new RecursiveFibonacci(arrayOfInts, memoized);
     } else {
-      System.out.print("Would you like to use a memoized approach or not? (enter Yes or No) ");
-      String memoInput = userInput.next();
-
-      Pattern memoPtn = Pattern.compile("(?i)yes");
-      Matcher memoM = memoPtn.matcher(memoInput);
-
-      boolean memoized = memoM.matches();
-
-
       IterativeFibonacci fib = new IterativeFibonacci(arrayOfInts, memoized);
     }
 
