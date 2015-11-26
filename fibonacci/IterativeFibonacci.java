@@ -7,21 +7,21 @@ class IterativeFibonacci {
   boolean memoized;
 
   IterativeFibonacci(int[] n, boolean memoize) {
-    nums = n;
-    memoized = memoize;
+    this.nums = n;
+    this.memoized = memoize;
 
-    if (memoized == false) {
+    if (this.memoized == false) {
       ArrayList<BigInteger> ret = new ArrayList<BigInteger>();
-      for (int i = 0; i < nums.length; i++) {
-        ret.add(calc(nums[i]));
+      for (int i = 0; i < this.nums.length; i++) {
+        ret.add(calc(this.nums[i]));
       }
       System.out.println("Here are your Fibonacci numbers: " + ret);
     } else {
-      arrayNums = new ArrayList<Integer>();
-      for (int num : n) {
-        arrayNums.add(num);
+      this.arrayNums = new ArrayList<Integer>();
+      for (int num : this.nums) {
+        this.arrayNums.add(num);
       }
-      System.out.println("Here are your Fibonacci numbers: " + memoizedCalc(arrayNums));
+      System.out.println("Here are your Fibonacci numbers: " + memoizedCalc(this.arrayNums));
     }
   }
 

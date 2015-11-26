@@ -3,35 +3,36 @@ import java.util.ArrayList;
 
 class RecursiveFibonacci {
   int[] nums;
-  ArrayList<Integer> arrayNums;
   boolean memoized;
+  ArrayList<Integer> arrayNums;
 
   RecursiveFibonacci(int[] n, boolean memoize) {
-    nums = n;
-    memoized = memoize;
+    this.nums = n;
+    this.memoized = memoize;
+    this.arrayNums = new ArrayList<Integer>();
 
-    if (memoized == false) {
+    if (this.memoized == false) {
       ArrayList<BigInteger> ret = new ArrayList<BigInteger>();
-      for (int i = 0; i < nums.length; i++) {
-        ret.add(calc(nums[i]));
+      for (int i = 0; i < this.nums.length; i++) {
+        ret.add(calc(this.nums[i], new ArrayList<BigInteger>()));
       }
       System.out.println("Here are your Fibonacci numbers: " + ret);
     } else {
       arrayNums = new ArrayList<Integer>();
-      for (int num : n) {
+      for (int num : this.nums) {
         arrayNums.add(num);
       }
       System.out.println("Here are your Fibonacci numbers: " + memoizedCalc(arrayNums));
     }
   }
 
-  public BigInteger calc(int num) {
-    BigInteger ret = BigInteger.valueOf(0);
-
+  public BigInteger calc(int num, ArrayList<BigInteger> memo) {
     if (num < 2) {
       return BigInteger.valueOf(num);
+    } else if (num < memo.size()) {
+      return memo.get(num);
     } else {
-      ret = calc(num - 1).add(calc(num - 2));
+      BigInteger ret = calc(num - 1, memo).add(calc(num - 2, memo));
       return ret;
     }
   }
@@ -47,7 +48,7 @@ class RecursiveFibonacci {
         ret.add(BigInteger.valueOf(n));
       } else {
         for (int i = 2; i <= n; i++) {
-          BigInteger result = calc(n - 1).add(calc(n - 2));
+          BigInteger result = calc(i, memo);
           if (i >= memo.size()) {
             memo.add(result);
           }
