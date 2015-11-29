@@ -16,7 +16,7 @@ public class Quicksort {
   public void setupSort(int n, int max) {
     Random rand = new Random();
     for (int i = 1; i <= n; i++) {
-      int answer = rand.nextInt(max + 1);
+      int answer = rand.nextInt((max * 2) + 1) - max;
       addToNums(answer);
     }
   }
