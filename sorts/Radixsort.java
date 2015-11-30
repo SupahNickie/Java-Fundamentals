@@ -1,25 +1,8 @@
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Random;
 
 public class Radixsort {
-  ArrayList<Integer> nums;
 
-  Radixsort() {
-    this.nums = new ArrayList<Integer>();
-  }
-
-  private void addToNums(int n) {
-    this.nums.add(n);
-  }
-
-  public void setupSort(int n, int max) {
-    Random rand = new Random();
-    for (int i = 1; i <= n; i++) {
-      int answer = rand.nextInt((max * 2) + 1) - max;
-      addToNums(answer);
-    }
-  }
+  Radixsort() { }
 
   public ArrayList<Integer> sort(ArrayList<Integer> array) {
     ArrayList<Integer> arrayCopy = new ArrayList<Integer>(array);
@@ -44,7 +27,7 @@ public class Radixsort {
     return arrayCopy;
   }
 
-  public ArrayList<Integer> flatten(ArrayList<ArrayList<Integer>> buckets) {
+  private ArrayList<Integer> flatten(ArrayList<ArrayList<Integer>> buckets) {
     ArrayList<Integer> ret = new ArrayList<Integer>();
 
     for(int i = 0; i < buckets.size(); i++) {
@@ -53,7 +36,7 @@ public class Radixsort {
     return ret;
   }
 
-  public int findLongestNumber(ArrayList<Integer> array) {
+  private int findLongestNumber(ArrayList<Integer> array) {
     int min = 0;
     int max = 0;
     for(int i = 0; i < array.size(); i++) {
@@ -72,17 +55,6 @@ public class Radixsort {
     }
   }
 
-  public static void main(String[] args) {
-    Scanner userInput = new Scanner(System.in);
-    System.out.print("How many random numbers would you like generated? ");
-    int n = Integer.parseInt(userInput.next());
-    System.out.print("What upper bound to the numbers would you like to use? ");
-    int max = Integer.parseInt(userInput.next());
-    Radixsort r = new Radixsort();
-    r.setupSort(n, max);
-    System.out.println("K, sorting");
-    System.out.println(r.sort(r.nums));
-  }
 }
 
 

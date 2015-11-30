@@ -1,25 +1,8 @@
 import java.util.ArrayList;
-import java.util.Scanner;
-import java.util.Random;
 
 public class Mergesort {
-  ArrayList<Integer> nums;
 
-  Mergesort() {
-    this.nums = new ArrayList<Integer>();
-  }
-
-  private void addToNums(int n) {
-    this.nums.add(n);
-  }
-
-  public void setupSort(int n, int max) {
-    Random rand = new Random();
-    for (int i = 1; i <= n; i++) {
-      int answer = rand.nextInt((max * 2) + 1) - max;
-      addToNums(answer);
-    }
-  }
+  Mergesort() { }
 
   public ArrayList<Integer> sort(ArrayList<Integer> array) {
     if (array.size() == 1) {
@@ -45,21 +28,9 @@ public class Mergesort {
         break;
       }
     }
-
     result.addAll(left);
     result.addAll(right);
     return result;
   }
 
-  public static void main(String[] args) {
-    Scanner userInput = new Scanner(System.in);
-    System.out.print("How many random numbers would you like generated? ");
-    int n = Integer.parseInt(userInput.next());
-    System.out.print("What upper bound to the numbers would you like to use? ");
-    int max = Integer.parseInt(userInput.next());
-    Mergesort m = new Mergesort();
-    m.setupSort(n, max);
-    System.out.println("K, sorting");
-    System.out.println(m.sort(m.nums));
-  }
 }
