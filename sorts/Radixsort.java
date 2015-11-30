@@ -14,13 +14,14 @@ public class Radixsort {
       }
       int base = (int) Math.pow(10, i);
       for(int j = 0; j < arrayCopy.size(); j++) {
-        int bucketDigit = Math.floorMod((arrayCopy.get(j) / base), 10);
-        if (arrayCopy.get(j) >= 0) {
+        int num = arrayCopy.get(j);
+        int bucketDigit = ((Math.abs(num) / base) % 10);
+        if (num >= 0) {
           bucketDigit += 10;
-        } else if ((String.valueOf(arrayCopy.get(j)).length() < (i + 1)) && arrayCopy.get(j) < 0) {
-          bucketDigit += 9;
+        } else if (num < 0) {
+          bucketDigit = Math.abs(bucketDigit -= 10);
         }
-        buckets.get(bucketDigit).add(arrayCopy.get(j));
+        buckets.get(bucketDigit).add(num);
       }
       arrayCopy = flatten(buckets);
     }
@@ -46,7 +47,7 @@ public class Radixsort {
         min = array.get(i);
       }
     }
-    int minLength = String.valueOf(min).length();
+    int minLength = String.valueOf(Math.abs(min)).length();
     int maxLength = String.valueOf(max).length();
     if (minLength > maxLength) {
       return minLength;

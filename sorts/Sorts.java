@@ -31,31 +31,37 @@ public class Sorts {
     int max = Integer.parseInt(userInput.next());
     Sorts s = new Sorts();
     s.setupSort(n, max);
-    System.out.print("Which sorting algorithm would you like to use? ");
-    String input = userInput.next();
 
-    Pattern mergePtn = Pattern.compile("(?i)merge");
-    Matcher mergeM = mergePtn.matcher(input);
-    Pattern quickPtn = Pattern.compile("(?i)quick");
-    Matcher quickM = quickPtn.matcher(input);
-    Pattern radixPtn = Pattern.compile("(?i)radix");
-    Matcher radixM = radixPtn.matcher(input);
+    boolean matched = false;
+    while (matched == false) {
+      System.out.print("Which sorting algorithm would you like to use? ");
+      String input = userInput.next();
 
-    if (mergeM.matches()) {
-      Mergesort x = new Mergesort();
-      System.out.println("K, sorting with Mergesort");
-      System.out.println(x.sort(s.nums));
-    } else if (quickM.matches()) {
-      Quicksort x = new Quicksort();
-      System.out.println("K, sorting with Quicksort");
-      System.out.println(x.sort(s.nums));
-    } else if (radixM.matches()) {
-      System.out.println("K, sorting with Radixsort");
-      Radixsort x = new Radixsort();
-      System.out.println(x.sort(s.nums));
-    } else {
-      System.out.println("Sorry, didn't catch that. Please run me again.");
-      System.exit(0);
+      Pattern mergePtn = Pattern.compile("(?i)merge");
+      Matcher mergeM = mergePtn.matcher(input);
+      Pattern quickPtn = Pattern.compile("(?i)quick");
+      Matcher quickM = quickPtn.matcher(input);
+      Pattern radixPtn = Pattern.compile("(?i)radix");
+      Matcher radixM = radixPtn.matcher(input);
+
+      if (mergeM.matches()) {
+        matched = true;
+        Mergesort x = new Mergesort();
+        System.out.println("K, sorting with Mergesort");
+        System.out.println(x.sort(s.nums));
+      } else if (quickM.matches()) {
+        matched = true;
+        Quicksort x = new Quicksort();
+        System.out.println("K, sorting with Quicksort");
+        System.out.println(x.sort(s.nums));
+      } else if (radixM.matches()) {
+        matched = true;
+        System.out.println("K, sorting with Radixsort");
+        Radixsort x = new Radixsort();
+        System.out.println(x.sort(s.nums));
+      } else {
+        System.out.println("Sorry, didn't catch that. Please try again.");
+      }
     }
   }
 
