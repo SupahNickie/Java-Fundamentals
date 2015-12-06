@@ -1,5 +1,5 @@
-identifier,language,uses
-0001,Java,"General, Web, a little bit of everything"
-0002,Python,
-0003,Ruby,Scripting
-0004,,Game Dev
+identifier,language,uses,do_i_use_it?
+0001,Java,"General, Web, a little bit of everything",learning to!
+0002,Python,,"it's pretty similar to Ruby, so..."
+0003,"Ruby, Javascript","Scripting, Backend web, headless browsing",yup!
+0004,,Game Dev,nope!
