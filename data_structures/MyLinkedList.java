@@ -1,24 +1,32 @@
+import java.util.AbstractList;
+
 public class MyLinkedList<E> {
-  private ListNode<E> head;
-  private ListNode<E> tail;
+  private LLNode<E> head;
+  private LLNode<E> tail;
   private int size;
 
   public MyLinkedList( ) {
     this.size = 0;
-    this.head = new ListNode<E>(null);
-    this.tail = new ListNode<E>(null);
+    this.head = new LLNode<E>(null);
+    this.tail = new LLNode<E>(null);
     this.head.next = this.tail;
     this.tail.prev = this.head;
   }
 
-  public int size() { return this.size; }
+  public int size() {
+    return this.size;
+  }
 
-  public ListNode<E> get(int ind) throws NullPointerException {
-    if (ind < 0 || size() < 1) {
-      throw new NullPointerException("MyLinkedList 'get' index must be > -1");
+  public E get(int ind) throws IndexOutOfBoundsException {
+    return getElement(ind).data;
+  }
+
+  public LLNode<E> getElement(int ind) throws IndexOutOfBoundsException {
+    if (ind < 0 || (ind > size() - 1)) {
+      throw new IndexOutOfBoundsException("MyLinkedList 'get' index must be > -1 and less than the size of the list");
     }
 
-    ListNode<E> current = null;
+    LLNode<E> current = null;
     if (ind <= (size() / 2)) {
       current = this.head;
       for (int i = 0; i <= ind; i++) {
@@ -34,42 +42,70 @@ public class MyLinkedList<E> {
     return current;
   }
 
-  public void set(int ind, E data) {
-    ListNode<E> current = get(ind);
-    current.data = data;
+  public boolean add(E data) throws NullPointerException {
+    if (data != null) {
+      LLNode<E> current = new LLNode<E>(data);
+      current.prev = this.tail.prev;
+      current.next = this.tail;
+      this.tail.prev.next = current;
+      this.tail.prev = current;
+      this.size++;
+      return true;
+    } else {
+      throw new NullPointerException("Can't add null to the List");
+    }
   }
 
-  public void add(int ind, E data) {
-    ListNode<E> current = get(ind);
-    ListNode<E> newNode = new ListNode<E>(data);
-    newNode.prev = current.prev;
-    newNode.next = current;
-    current.prev.next = newNode;
-    current.prev = newNode;
-    this.size++;
+  public void add(int ind, E data) throws IndexOutOfBoundsException, NullPointerException {
+    if (data != null) {
+      if (size() == 0) {
+        add(data);
+      } else {
+        if (ind < 0 || (ind > size() - 1)) {
+          throw new IndexOutOfBoundsException("MyLinkedList 'get' index must be > -1 and less than the size of the list");
+        }
+
+        if (size() > 0) {
+          LLNode<E> newNode = new LLNode<E>(data);
+          LLNode<E> current = getElement(ind);
+          newNode.prev = current.prev;
+          newNode.next = current;
+          current.prev.next = newNode;
+          current.prev = newNode;
+          this.size++;
+        }
+      }
+    } else {
+      throw new NullPointerException("Can't add null elements to the List");
+    }
   }
 
-  public void add(E data) {
-    ListNode<E> current = new ListNode<E>(data);
-    current.prev = this.tail.prev;
-    current.next = this.tail;
-    this.tail.prev.next = current;
-    this.tail.prev = current;
-    this.size++;
-  }
-
-  public ListNode remove(int ind) throws NullPointerException {
-    if (ind < 0 || size() < 1) {
-      throw new NullPointerException("MyLinkedList 'remove' index must be > -1");
+  public E remove(int ind) throws IndexOutOfBoundsException {
+    if (ind < 0 || size() < 1 || (ind > size() - 1)) {
+      throw new IndexOutOfBoundsException("MyLinkedList 'get' index must be > -1 and less than the size of the list");
     }
 
-    ListNode<E> current = get(ind);
+    LLNode<E> current = getElement(ind);
     current.prev.next = current.next;
     current.next.prev = current.prev;
     current.prev = null;
     current.next = null;
     this.size--;
-    return current;
+    return current.data;
   }
 
+  public E set(int ind, E data) throws IndexOutOfBoundsException, NullPointerException
+  {
+    if (data != null) {
+      if (ind < 0 || size() < 1 || (ind > size() - 1)) {
+        throw new IndexOutOfBoundsException("MyLinkedList 'get' index must be > -1 and less than the size of the list");
+      }
+
+      LLNode<E> current = getElement(ind);
+      current.data = data;
+      return data;
+    } else {
+      throw new NullPointerException("Can't set anything to null");
+    }
+  }
 }
