@@ -45,7 +45,7 @@ public class Trie {
     return curr;
   }
 
-  public boolean insert(String word) {
+  public void insert(String word) {
     TrieNode curr = this.root;
     for (Character c : word.toLowerCase().toCharArray()) {
       if (curr.getChild(c) == null) {
@@ -58,7 +58,6 @@ public class Trie {
     }
     curr.setIsWordNode(true);
     curr.setText(word.toLowerCase());
-    return true;
   }
 
   public List<String> autoComplete(String stem, int numCompletions) {
