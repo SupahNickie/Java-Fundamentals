@@ -1,28 +1,24 @@
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Scanner;
 
-public class CsvPractice {
+public class CsvParser {
 
-  CsvPractice() {
-
-  }
+  CsvParser() { }
 
   public ArrayList<HashMap<String, String>> parseCsv(String path) {
-    Path filePath = Paths.get(path);
     ArrayList<HashMap<String, String>> ret = new ArrayList<HashMap<String, String>>();
     String currentLine = null;
+    BufferedReader reader = null;
 
     try {
-      Scanner scanner = new Scanner(filePath);
+      reader = new BufferedReader(new FileReader(path));
       int index = 0;
       ArrayList<String> headers = new ArrayList<String>();
 
-      while (scanner.hasNextLine()) {
-        currentLine = scanner.nextLine();
+      while ((currentLine = reader.readLine()) != null) {
         HashMap<String, String> currentRow = new HashMap<String, String>();
         if (currentLine != null) {
 
@@ -64,7 +60,7 @@ public class CsvPractice {
         }
         index++;
       }
-      scanner.close();
+      reader.close();
     } catch (IOException e) {
       e.printStackTrace();
     }
@@ -73,7 +69,7 @@ public class CsvPractice {
 
   public static void main(String[] args) {
     String path = (System.getProperty("user.dir") + "/sample.csv");
-    CsvPractice csv = new CsvPractice();
+    CsvParser csv = new CsvParser();
     System.out.println(csv.parseCsv(path));
   }
 
