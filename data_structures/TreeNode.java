@@ -25,6 +25,9 @@ public class TreeNode<E> {
     return this.rightChild;
   }
 
+  public TreeNode<E> getParent() { return this.parent; }
   public TreeNode<E> getLeftChild() { return this.leftChild; }
   public TreeNode<E> getRightChild() { return this.rightChild; }
+  public void setValue(E value) { this.value = value; }
+  public void setParent(TreeNode<E> node) { this.parent = node; }
 }
