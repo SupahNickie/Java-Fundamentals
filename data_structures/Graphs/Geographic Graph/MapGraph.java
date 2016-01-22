@@ -112,7 +112,7 @@ public class MapGraph {
       return null;
     }
 
-    System.out.println("A Star search visited " + count + " nodes.");
+    System.out.println("Dijkstra search visited " + count + " nodes.");
 
     if (parents == null) {
       return null;
