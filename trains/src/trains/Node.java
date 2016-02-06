@@ -50,6 +50,14 @@ public class Node implements Comparable<Node> {
 		}
 		return (Double)null;
 	}
+
+	public boolean equals(Node n) {
+		if (this.name == n.getName()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	
 	public int compareTo(Node n) {
 		return ((Double)this.getDistance()).compareTo((Double)n.getDistance());

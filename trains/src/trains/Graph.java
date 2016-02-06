@@ -13,12 +13,39 @@ import java.util.PriorityQueue;
 
 public class Graph {
 	Map<Character, Node> nodeMap = new HashMap<Character, Node>();
-	Map<Node, Node> parentMap = new HashMap<Node, Node>();
 	private int numVertices;
 	private int numEdges;
 	
 	public int getNumVertices() { return this.numVertices; }
 	public int getNumEdges() { return this.numEdges; }
+	
+	public int getDistance(String path) {
+		int distance = 0;
+		Node curr = null;
+		Node next = null;
+		
+		try {
+			for (int i = 0; i < path.length() -1; i++) {
+				curr = nodeMap.get(path.toCharArray()[i]);
+				next = nodeMap.get(path.toCharArray()[i+1]);
+				distance += curr.getDistanceTo(next);
+			}
+
+			return distance;			
+		} catch (Exception e) {
+			System.out.println("NO SUCH ROUTE.");
+			return 0;
+		}
+	}
+	
+	public int getDistance(List<Node> path) {
+		String stringPath = "";
+		for (Node node : path) {
+			stringPath += node.getName();
+		}
+		System.out.println(stringPath);
+		return getDistance(stringPath);
+	}
 	
 	// Implements Dijkstra's algorithm instead of A* since we can't triangulate exact
 	// coordinates of any given node.
@@ -33,6 +60,7 @@ public class Graph {
 			nodeMap.get(c).setDistance(Double.POSITIVE_INFINITY);
 		}
 		
+		Map<Node, Node> parentMap = new HashMap<Node, Node>();		
 		PriorityQueue<Node> queue = new PriorityQueue<Node>();
 		Set<Node> visited = new HashSet<Node>();
 		start.setDistance(0.0);
@@ -45,14 +73,19 @@ public class Graph {
 			if (!visited.contains(curr)) {
 				visitedCount++;
 				visited.add(curr);
-				if (curr.equals(end)) { break; }
-				List<Node> neighbors = curr.getNeighbors();
-				for (Node n : neighbors) {
-					if (!visited.contains(n)) {
-						double actualDistance = curr.getDistance() + curr.getDistanceTo(n);
-						n.setDistance(actualDistance);
-						parentMap.put(n, curr);
-						queue.add(n);
+				if (curr.equals(end) && visitedCount > 1) { 
+				  break;
+				} else {
+					List<Node> neighbors = curr.getNeighbors();
+					for (Node n : neighbors) {
+						if (!visited.contains(n)) {
+							double actualDistance = curr.getDistance() + curr.getDistanceTo(n);
+							if (actualDistance < n.getDistance()) {
+								n.setDistance(actualDistance);
+								parentMap.put(n, curr);
+								queue.add(n);													
+							}
+						}
 					}
 				}
 			}
@@ -69,7 +102,6 @@ public class Graph {
 			System.out.println("There is no valid path");
 			return null;			
 		} else { 
-			System.out.println("Path ran through " + visitedCount + " nodes");
 			return path;
 		}
 
@@ -82,8 +114,6 @@ public class Graph {
 		try {
 			reader = new BufferedReader(new FileReader("data/input.txt"));
 			while ((currentLine = reader.readLine()) != null) {
-				System.out.println(currentLine);
-				
 				char[] chars = currentLine.toCharArray();
 				Node start = nodeMap.get(chars[0]);
 				Node end = nodeMap.get(chars[1]);
@@ -96,7 +126,7 @@ public class Graph {
 					end = new Node(chars[1]);
 					nodeMap.put(chars[1], end);					
 				}
-				Edge edge = new Edge(start, end, chars[2]);
+				Edge edge = new Edge(start, end, Character.getNumericValue(chars[2]));
 				numEdges++;
 				start.addEdge(edge);
 			}
@@ -108,10 +138,14 @@ public class Graph {
 	public static void main(String[] args) {
 		Graph graph = new Graph();
 		graph.setup();
-		List<Node> found = graph.search('A', 'C');
-		for (Node n : found) {
-			System.out.println(n.getName());
-		}
+		
+		System.out.println("PROBLEM 1: " + graph.getDistance("ABC"));
+		System.out.println("PROBLEM 2: " + graph.getDistance("AD"));
+		System.out.println("PROBLEM 3: " + graph.getDistance("ADC"));
+		System.out.println("PROBLEM 4: " + graph.getDistance("AEBCD"));
+		System.out.println("PROBLEM 5: " + graph.getDistance("AED"));
+		System.out.println("PROBLEM 6: " + graph.getDistance(graph.search('A', 'C')));		
+		
 	}
 	
 }
