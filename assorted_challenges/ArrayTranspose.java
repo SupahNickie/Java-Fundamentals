@@ -24,9 +24,9 @@ public class ArrayTranspose {
   }
 
   public static void main(String[] args) {
-    int[][] things = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
-    int[][] things2 = {{1, 2, 3}, {4, 5, 6}};
-    System.out.println(transpose(things));
-    System.out.println(transpose(things2));
+    int[][] array = {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
+    int[][] array2 = {{1, 2, 3}, {4, 5, 6}};
+    System.out.println(transpose(array));
+    System.out.println(transpose(array2));
   }
 }

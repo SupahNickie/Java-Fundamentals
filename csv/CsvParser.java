@@ -49,7 +49,6 @@ public class CsvParser {
               if (index == 0) {
                 headers.add(cells.get(i).trim());
               } else {
-
                 currentRow.put(headers.get(i), cells.get(i).trim());
               }
             }
